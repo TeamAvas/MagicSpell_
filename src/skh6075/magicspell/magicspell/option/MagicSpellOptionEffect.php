@@ -12,7 +12,7 @@ use pocketmine\entity\Entity;
 use pocketmine\math\Vector3;
 use pocketmine\player\Player;
 
-final class MagicSpellEffectParticle extends MagicSpellOption{
+final class MagicSpellOptionEffect extends MagicSpellOption{
 
 	private const ID = 'id';
 	private const DURATION = 'duration';
@@ -81,8 +81,10 @@ final class MagicSpellEffectParticle extends MagicSpellOption{
 
 	public function execute(Entity|Vector3|Player|null $object = null) : void{
 		if(!$object instanceof Entity){
-			throw new InvalidArgumentException();
+			throw new InvalidArgumentException("[EffectOption] Effect interactions are only possible with Entity.");
 		}
-		
+		foreach($this->effects as $effect){
+			$object->getEffects()->add($effect);
+		}
 	}
 }
